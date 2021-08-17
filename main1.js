@@ -4,10 +4,9 @@ var listPokemon = [];
 var btnRegister = $("#register");
 var btnUpdate = $("#update");
 
-// Hides update button
 btnUpdate.hide();
 
-// Mostrar 
+
 const mostrarPokemones = () => {
     $.ajax({
         type: 'GET',
@@ -20,10 +19,14 @@ const mostrarPokemones = () => {
         for(let i = 0; i < listPokemon.length; i++){
             selectPokemon.append(`<option value="${ i + 1 }">${ listPokemon[i].name }</option>`);
         }
+        $(document).on('change','#selectPokemon',function(){
+            $(this).siblings().find('option[listPokemon[i].name="'+$(this).val()+'"]').remove();
+          });
+
     });
 };
 
-// Fill users table with local storage list
+
 const fill = () => {
     let content = "";
 
@@ -53,7 +56,7 @@ const fill = () => {
     $("#tablePokemon > tbody").html(content);
 };
 
-// Find list in local storage
+
 const findAll = () => {
     if(typeof(Storage) !== "undefined"){
         if(!localStorage.listUsers){
@@ -67,14 +70,13 @@ const findAll = () => {
     }
 };
 
-// Create new user
 const create = () => {
     let user = new Object();
 
     let name = $("#name").val();
     let lastname = $("#lastname").val();
     let lastname2 = $("#lastname2").val();
-    let imgPokemon= $("#imgPokemon")
+    let imgPokemon= $("#imgPokemon").val();
     let selectPokemon = $("#selectPokemon option:selected").text();
 
     user.name = name;
@@ -88,7 +90,7 @@ const create = () => {
     findAll();
 };
 
-// Set inputs with data of user by index
+
 const getUserByIndex = (index) => {
     btnRegister.hide();
     btnUpdate.show();
